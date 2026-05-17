@@ -48,7 +48,8 @@ body {
   margin-top: 2rem;      /* Gives spacing from the navbar */
   margin-bottom: 1.5rem; /* Gives spacing to the paragraph below */
   background: linear-gradient(to right, #f8fafc, #38bdf8);
-  -webkit-background-clip: text;
+  background-clip: text;        /* Standard property (fixes the warning) */
+  -webkit-background-clip: text; /* Vendor prefix for Safari/Chrome support */
   -webkit-text-fill-color: transparent;
   display: block;        /* Ensures it behaves as a full block element */
 }
