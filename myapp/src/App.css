@@ -1,0 +1,122 @@
+/* Style 1: Global Reset and Body Background */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* Style 2: Flexbox Layout for Header/Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #334155;
+}
+
+.navbar h2 {
+  color: #38bdf8;
+  margin: 0;
+}
+
+.navbar nav a {
+  color: #94a3b8;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.navbar nav a:hover {
+  color: #38bdf8;
+}
+
+/* Style 3: Centered Hero Typography and Spacing */
+.hero-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.hero-section h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, #f8fafc, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Style 4: Interactive Button Component with Hover Effects */
+.cta-button {
+  background-color: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.cta-button:hover {
+  background-color: #0369a1;
+  transform: translateY(-2px);
+}
+
+/* Style 5: CSS Grid System for Features */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.feature-card {
+  background-color: #1e293b;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  text-align: left;
+}
+
+.feature-card h3 {
+  color: #38bdf8;
+  margin-top: 0;
+}
+
+/* Style 6: List Layout and Spacing */
+.info-list {
+  margin-top: 4rem;
+  text-align: left;
+  background-color: #111827;
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.info-list ul {
+  padding-left: 1.2rem;
+}
+
+.info-list li {
+  margin-bottom: 0.8rem;
+  color: #cbd5e1;
+}
+
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
