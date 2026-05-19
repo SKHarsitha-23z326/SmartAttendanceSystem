@@ -1,122 +1,474 @@
-/* Style 1: Global Reset and Body Background */
+/* ==========================================================================
+   1. GLOBAL RESET & BASE obsidian INTERFACE 
+   ========================================================================== */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #000000; /* Deep absolute black background */
+  color: #e5e5e5; /* Premium muted white for readable prose */
   min-height: 100vh;
+  letter-spacing: -0.01em;
 }
 
-/* Style 2: Flexbox Layout for Header/Navbar */
+/* Base link behavior overrides */
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   2. APP SHELL & CONTAINER LAYOUTS
+   ========================================================================== */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #000000;
+}
+
+.content-area {
+  padding: 3rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   3. HIGH-CONTRAST PROFESSIONAL NAVBAR
+   ========================================================================== */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  background-color: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #334155;
+  padding: 1.25rem 2rem;
+  background-color: #0a0a0a; /* Polished charcoal frame layer */
+  border-bottom: 1px solid #1a1a1a; /* Subtle separator grid lines */
 }
 
-.navbar h2 {
-  color: #38bdf8;
-  margin: 0;
+.nav-brand a {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
 }
 
-.navbar nav a {
-  color: #94a3b8;
-  text-decoration: none;
-  margin-left: 1.5rem;
-  transition: color 0.3s ease;
+.nav-links a {
+  font-size: 0.95rem;
+  color: #a3a3a3;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.navbar nav a:hover {
-  color: #38bdf8;
+.nav-links a:hover {
+  color: #ffffff;
 }
 
-/* Style 3: Centered Hero Typography and Spacing */
+/* ==========================================================================
+   4. STEP 1 LANDING PAGE HERO TYPOGRAPHY (ALIGNED FIX)
+   ========================================================================== */
 .hero-section {
   max-width: 800px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 4rem 1rem;
   text-align: center;
 }
 
 .hero-section h1 {
-  font-size: 2.8rem;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
-  background: linear-gradient(to right, #f8fafc, #38bdf8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff; /* Bright solid white hero title */
+  display: block;
 }
 
 .hero-section p {
-  font-size: 1.2rem;
-  color: #94a3b8;
+  font-size: 1.15rem;
+  color: #a3a3a3;
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
-/* Style 4: Interactive Button Component with Hover Effects */
-.cta-button {
-  background-color: #0284c7;
-  color: #ffffff;
-  border: none;
-  padding: 0.8rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
+/* ==========================================================================
+   5. AUTHENTICATION / LOGIN CONTAINER CARD
+   ========================================================================== */
+.auth-card {
+  background: #0a0a0a;
+  max-width: 420px;
+  margin: 4rem auto;
+  padding: 2.5rem;
   border-radius: 8px;
+  border: 1px solid #1a1a1a;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
+.auth-card h2 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+  color: #737373;
+}
+
+.form-group input, 
+.form-group select {
+  padding: 0.8rem;
+  background: #141414; /* Pure gray nested console boxes */
+  border: 1px solid #262626;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+  outline: none;
+  border-color: #525252;
+  background: #1a1a1a;
+}
+
+/* ==========================================================================
+   6. PREMIUM MONOCHROME ACTION BUTTONS
+   ========================================================================== */
+.cta-button {
+  width: 100%;
+  background-color: #ffffff; /* Bright inverse block button */
+  color: #000000;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .cta-button:hover {
-  background-color: #0369a1;
-  transform: translateY(-2px);
+  background-color: #e5e5e5;
 }
 
-/* Style 5: CSS Grid System for Features */
+.cta-button:active {
+  transform: scale(0.99);
+}
+
+.logout-btn {
+  background: #141414;
+  color: #ef4444; /* Clean crimson red string text indicators */
+  border: 1px solid #262626;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+.session-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.session-btn.active {
+  background: #141414;
+  color: #ef4444;
+  border: 1px solid #262626;
+}
+
+.session-btn.active:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+.session-btn.closed {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+}
+
+/* ==========================================================================
+   7. DASHBOARDS & CORE STRUCTURAL BLOCKS
+   ========================================================================== */
+.dashboard-container {
+  text-align: left;
+  background: #0a0a0a;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #1a1a1a;
+}
+
+.dashboard-container h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-top: 0;
+  color: #ffffff;
+}
+
+.profile-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-banner h1 { margin: 0; }
+.profile-banner p { margin: 0; font-weight: 500; color: #a3a3a3; }
+
+.geo-card {
+  background: #000000;
+  padding: 2rem;
+  border-radius: 6px;
+  border: 1px solid #1a1a1a;
+}
+
+.geo-card h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.status-text {
+  font-size: 0.95rem;
+  color: #a3a3a3;
+}
+
+.coords-box {
+  display: flex;
+  gap: 2.5rem;
+  background: #0a0a0a;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+  border: 1px solid #1a1a1a;
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: #d4d4d4;
+}
+
+.secure-btn {
+  max-width: 280px;
+  margin-top: 1rem;
+}
+
+.instructor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   8. ANALYTICAL CARD METRICS GRID
+   ========================================================================== */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.metric-box {
+  background: #000000;
+  padding: 1.5rem;
+  border-radius: 6px;
+  border: 1px solid #1a1a1a;
+}
+
+.metric-box h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #737373;
+}
+
+.metric-box h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   9. DATA TABLES & REUSABLE GRID COMPONENTS
+   ========================================================================== */
+.table-wrapper {
+  margin-top: 2.5rem;
+}
+
+.table-wrapper h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+}
+
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.roster-table th, 
+.roster-table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.roster-table th {
+  color: #ffffff;
+  background-color: #050505;
+  font-weight: 600;
+  border-top: 1px solid #1a1a1a;
+}
+
+.roster-table td {
+  color: #e5e5e5;
+}
+
+.roster-table tr:hover td {
+  background-color: #050505; /* Subtle row tint highlighting on interactive drift */
+}
+
+/* ==========================================================================
+   10. STATUS BADGES & UI CHIPS
+   ========================================================================== */
+.badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.badge.absent {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.badge.verified-&-logged-present {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.geo-badge-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.empty-state {
+  color: #737373;
+  padding: 2rem;
+  background: #000000;
+  border-radius: 6px;
+  border: 1px dashed #1a1a1a;
+  text-align: center;
+}
+
+/* ==========================================================================
+   11. ASSIGNMENT STEP-1 LANDING COMPONENT EXTRAS
+   ========================================================================== */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
-  margin-top: 4rem;
+  margin-top: 3.5rem;
 }
 
 .feature-card {
-  background-color: #1e293b;
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #334155;
+  background-color: #0a0a0a;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #1a1a1a;
   text-align: left;
 }
 
 .feature-card h3 {
-  color: #38bdf8;
+  color: #ffffff;
+  font-size: 1.25rem;
   margin-top: 0;
+  margin-bottom: 0.75rem;
 }
 
-/* Style 6: List Layout and Spacing */
 .info-list {
   margin-top: 4rem;
   text-align: left;
-  background-color: #111827;
-  padding: 2rem;
-  border-radius: 12px;
+  background-color: #0a0a0a;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #1a1a1a;
+}
+
+.info-list h3 {
+  margin-top: 0;
+  color: #ffffff;
 }
 
 .info-list ul {
-  padding-left: 1.2rem;
+  padding-left: 1.25rem;
+  margin-bottom: 0;
 }
 
 .info-list li {
-  margin-bottom: 0.8rem;
-  color: #cbd5e1;
+  margin-bottom: 0.75rem;
+  color: #a3a3a3;
+  line-height: 1.5;
 }
 
 .footer {
   text-align: center;
-  padding: 2rem;
-  color: #64748b;
-  font-size: 0.9rem;
+  padding: 3rem 2rem;
+  color: #404040;
+  font-size: 0.85rem;
+  border-top: 1px solid #1a1a1a;
+  margin-top: auto;
 }
