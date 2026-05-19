@@ -40,7 +40,8 @@ function StudentDashboard() {
     <div className="dashboard-container">
       <div className="profile-banner">
         <h1>Welcome back, ID: {userId}</h1>
-        <p>Status: <span className={`badge ${attendanceStatus.toLowerCase().replace(/ /g, '-')}`}>{attendanceStatus}</span></p>
+        /* Find this line around line 43 and update it to use a clean string replace: */
+<p>Status: <span className={`badge ${attendanceStatus.toLowerCase().replace(/ /g, '-').replace(/&-/, '')}`}>{attendanceStatus}</span></p>
       </div>
 
       <div className="geo-card">
