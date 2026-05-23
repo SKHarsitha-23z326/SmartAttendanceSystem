@@ -19,7 +19,7 @@ function Login() {
     }
 
     try {
-      const response = await axios.post('https://smart-attendance-backend-api.vercel.app/api/auth/login', {
+      const response = await axios.post('/api/auth/login', {
         rollNo: credentials.id,
         password: credentials.password
       });
