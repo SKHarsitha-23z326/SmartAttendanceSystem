@@ -37,7 +37,7 @@ function StudentDashboard() {
 
     try {
       // Live routing through Geofence Middleware Check
-      const response = await axios.post('http://localhost:5000/api/attendance/submit', {
+      const response = await axios.post('/api/attendance/submit', {
         studentId: userId,
         studentName: studentName,
         latitude: coords.latitude,
