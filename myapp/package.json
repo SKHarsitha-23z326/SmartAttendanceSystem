@@ -1,13 +1,9 @@
-{
-  "name": "myapp",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+
+  {
+  "name": "smart-attendance-system-monorepo",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build": "cd myapp && npm install && npm run build"
   },
   "dependencies": {
     "axios": "^1.16.1",
@@ -27,3 +23,4 @@
     "vite": "^8.0.12"
   }
 }
+
