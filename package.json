@@ -2,7 +2,6 @@
   "name": "smart-attendance-system",
   "version": "1.0.0",
   "scripts": {
-    "build": "cd myapp && npm install && npm run build",
     "vercel-build": "cd myapp && npm install && npm run build"
   }
 }
