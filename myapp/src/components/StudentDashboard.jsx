@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function StudentDashboard() {
   const [coords, setCoords] = useState({ latitude: null, longitude: null });
   const [geoStatus, setGeoStatus] = useState('Fetching current position...');
   const [attendanceStatus, setAttendanceStatus] = useState('Absent');
+  
   const userId = localStorage.getItem('userId') || 'Student';
+  const studentName = localStorage.getItem('userName') || 'Harsitha S';
 
-  // useEffect triggers geolocation coordinates discovery on mount
   useEffect(() => {
     if (!navigator.geolocation) {
       setGeoStatus('Geolocation is not supported by your browser.');
@@ -27,21 +29,33 @@ function StudentDashboard() {
     );
   }, []);
 
-  const handleMarkAttendance = () => {
+  const handleMarkAttendance = async () => {
     if (!coords.latitude || !coords.longitude) {
       alert('Cannot mark attendance without exact location lock.');
       return;
     }
-    // Geofencing verification simulation logic
-    setAttendanceStatus('Verified & Logged Present');
+
+    try {
+      // Live routing through Geofence Middleware Check
+      const response = await axios.post('http://localhost:5000/api/attendance/submit', {
+        studentId: userId,
+        studentName: studentName,
+        latitude: coords.latitude,
+        longitude: coords.longitude
+      });
+
+      setAttendanceStatus(`Verified & Logged Present (${response.data.log.status})`);
+      alert(response.data.message);
+    } catch (error) {
+      alert(error.response?.data?.message || 'Geofence Verification Failed.');
+    }
   };
 
   return (
     <div className="dashboard-container">
       <div className="profile-banner">
-        <h1>Welcome back, ID: {userId}</h1>
-        /* Find this line around line 43 and update it to use a clean string replace: */
-<p>Status: <span className={`badge ${attendanceStatus.toLowerCase().replace(/ /g, '-').replace(/&-/, '')}`}>{attendanceStatus}</span></p>
+        <h1>Welcome back, {studentName} ({userId})</h1>
+        <p>Status: <span className={`badge ${attendanceStatus.toLowerCase().includes('verified') ? 'verified-logged-present' : 'absent'}`}>{attendanceStatus}</span></p>
       </div>
 
       <div className="geo-card">
@@ -58,9 +72,9 @@ function StudentDashboard() {
         <button 
           className="cta-button secure-btn" 
           onClick={handleMarkAttendance}
-          disabled={attendanceStatus.includes('Logged')}
+          disabled={attendanceStatus.includes('Verified')}
         >
-          {attendanceStatus.includes('Logged') ? 'Attendance Confirmed' : 'Verify Location & Check-in'}
+          {attendanceStatus.includes('Verified') ? 'Attendance Confirmed' : 'Verify Location & Check-in'}
         </button>
       </div>
     </div>

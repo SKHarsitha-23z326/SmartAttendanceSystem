@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AttendanceList from './AttendanceList';
+import axios from 'axios';
 
 function TeacherDashboard() {
-  // Parent state containing current roster list
-  const [roster, setRoster] = useState([
-    { id: '23Z301', name: 'Abishek M', time: '09:31 AM', tracking: 'Classroom Radius Lock' },
-    { id: '23Z314', name: 'Deepika S', time: '09:34 AM', tracking: 'Classroom Radius Lock' },
-    { id: '23Z326', name: 'Harsitha S', time: '09:35 AM', tracking: 'Classroom Radius Lock' }
-  ]);
-
+  const [roster, setRoster] = useState([]);
   const [isActiveSession, setIsActiveSession] = useState(true);
+
+  // Fetch verified entries from our local API tables
+  const fetchLogs = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/attendance/live-roster');
+      setRoster(response.data.logs);
+      setIsActiveSession(response.data.sessionActive);
+    } catch (error) {
+      console.error('Error fetching live data streams:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLogs();
+    // Set up a short poll interval to update live logs every 4 seconds
+    const trackingInterval = setInterval(fetchLogs, 4000);
+    return () => clearInterval(trackingInterval);
+  }, []);
+
+  const handleToggleSession = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/attendance/toggle-session');
+      setIsActiveSession(response.data.isSessionActive);
+    } catch (error) {
+      alert('Could not update session control status.');
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -17,7 +39,7 @@ function TeacherDashboard() {
         <h1>Professor Admin Control Hub</h1>
         <button 
           className={`session-btn ${isActiveSession ? 'active' : 'closed'}`}
-          onClick={() => setIsActiveSession(!isActiveSession)}
+          onClick={handleToggleSession}
         >
           {isActiveSession ? 'Close Attendance Window' : 'Open Attendance Window'}
         </button>
@@ -26,16 +48,15 @@ function TeacherDashboard() {
       <div className="metrics-grid">
         <div className="metric-box">
           <h4>Active Check-ins</h4>
-          <h2>{isActiveSession ? roster.length : 0} Students</h2>
+          <h2>{roster.length} Students</h2>
         </div>
         <div className="metric-box">
           <h4>Geofence Validation</h4>
-          <h2>Active (50m Radius)</h2>
+          <h2>{isActiveSession ? 'Active (50m Radius)' : 'Inactive'}</h2>
         </div>
       </div>
 
-      {/* Passing list down via PROPS */}
-      <AttendanceList activeStudents={isActiveSession ? roster : []} />
+      <AttendanceList activeStudents={roster} />
     </div>
   );
 }

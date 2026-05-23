@@ -1,33 +1,49 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
-  // useState tracking inputs
   const [credentials, setCredentials] = useState({ id: '', password: '', role: 'student' });
   const navigate = useNavigate();
 
-  // Getting Input handler dynamically for all fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!credentials.id || !credentials.password) {
       alert('Please fill out all fields.');
       return;
     }
 
-    // Store fake login state in browser storage
-    localStorage.setItem('userRole', credentials.role);
-    localStorage.setItem('userId', credentials.id);
+    try {
+      // Live API Call to Backend
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        id: credentials.id,
+        password: credentials.password
+      });
 
-    // React Router routing based on user choices
-    if (credentials.role === 'teacher') {
-      navigate('/teacher');
-    } else {
-      navigate('/student');
+      const { user } = response.data;
+
+      // Verify that the chosen form role matches their database designation
+      if (user.role !== credentials.role) {
+        alert(`Access Denied: Specified ID is registered as a ${user.role}.`);
+        return;
+      }
+
+      localStorage.setItem('userRole', user.role);
+      localStorage.setItem('userId', user.id);
+      localStorage.setItem('userName', user.name);
+
+      if (user.role === 'teacher') {
+        navigate('/teacher');
+      } else {
+        navigate('/student');
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || 'Authentication failed. Connection refused.');
     }
   };
 
@@ -45,24 +61,12 @@ function Login() {
 
         <div className="form-group">
           <label>Identification Number</label>
-          <input 
-            type="text" 
-            name="id" 
-            placeholder="e.g., 23Z326" 
-            value={credentials.id} 
-            onChange={handleChange} 
-          />
+          <input type="text" name="id" placeholder="e.g., 23Z326" value={credentials.id} onChange={handleChange} />
         </div>
 
         <div className="form-group">
           <label>Password</label>
-          <input 
-            type="password" 
-            name="password" 
-            placeholder="••••••••" 
-            value={credentials.password} 
-            onChange={handleChange} 
-          />
+          <input type="password" name="password" placeholder="••••••••" value={credentials.password} onChange={handleChange} />
         </div>
 
         <button type="submit" className="cta-button">Access Dashboard</button>
