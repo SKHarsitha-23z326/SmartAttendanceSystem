@@ -5,15 +5,12 @@ const loginUser = async (req, res) => {
   try {
     const { rollNo, password } = req.body;
     
-    console.log('req.body:', req.body);        // ← add this
-    console.log('Searching rollNo:', rollNo);  // ← add this
 
     if (!rollNo || !password) {
       return res.status(400).json({ message: 'Roll number and password are required.' });
     }
 
-    const user = await User.findOne({ rollNo });
-    console.log('Found user:', user);          // ← add this
+    const user = await User.findOne({ rollNo });    // ← add this
 
     if (!user) {
       return res.status(404).json({ message: 'No account found with that ID.' });
