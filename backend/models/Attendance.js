@@ -1,19 +1,30 @@
-const { attendanceLogsTable } = require('../config/db');
+const mongoose = require('mongoose');
 
-const Attendance = {
-  create: (logEntry) => {
-    const newEntry = {
-      id: attendanceLogsTable.length + 1,
-      ...logEntry,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-    attendanceLogsTable.push(newEntry);
-    return newEntry;
+const attendanceSchema = new mongoose.Schema({
+  studentId: {
+    type: String,
+    required: [true, 'Student ID is required.'],
+    trim: true,
+    uppercase: true
   },
-
-  getAllLogs: () => {
-    return attendanceLogsTable;
+  name: {
+    type: String,
+    required: [true, 'Student name is required.'],
+    trim: true
+  },
+  status: {
+    type: String,
+    enum: ['Absent', 'Verified Lock', 'Exempted'],
+    default: 'Verified Lock'
+  },
+  // ✅ Useful to store the distance for audit/review purposes
+  distanceAtCheckIn: {
+    type: String,
+    default: 'N/A'
   }
-};
+}, {
+  timestamps: true  // Stores createdAt automatically — useful for time-of-check-in
+});
 
+const Attendance = mongoose.model('Attendance', attendanceSchema);
 module.exports = Attendance;

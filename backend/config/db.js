@@ -1,13 +1,22 @@
 const mongoose = require('mongoose');
 
+const globalSystemConfig = {
+  isSessionActive: false,
+  classroomCoords: {
+    lat: 13.0827,  // 🔁 Replace with your actual classroom lat
+    lng: 80.2707   // 🔁 Replace with your actual classroom lng
+  },
+  allowedRadiusMeters: 50
+};
+
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect('mongodb://127.0.0.1:27017/smart_attendance');
-    console.log(`MongoDB Connected Successfully: ${conn.connection.host}`);
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`Database connection failure error: ${error.message}`);
-    process.exit(1); 
+    console.error(`Database connection error: ${error.message}`);
+    process.exit(1);
   }
 };
 
-module.exports = connectDB;
+module.exports = { connectDB, globalSystemConfig };

@@ -19,15 +19,13 @@ function Login() {
     }
 
     try {
-      // Live API Call to Backend
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
-        id: credentials.id,
+      const response = await axios.post('https://smart-attendance-backend-api.vercel.app/api/auth/login', {
+        rollNo: credentials.id,
         password: credentials.password
       });
 
       const { user } = response.data;
 
-      // Verify that the chosen form role matches their database designation
       if (user.role !== credentials.role) {
         alert(`Access Denied: Specified ID is registered as a ${user.role}.`);
         return;

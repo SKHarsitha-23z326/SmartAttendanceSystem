@@ -9,7 +9,7 @@ function TeacherDashboard() {
   // Fetch verified entries from our local API tables
   const fetchLogs = async () => {
     try {
-      const response = await axios.get('/api/attendance/live-roster');
+      const response = await axios.get('https://smart-attendance-backend-api.vercel.app/api/attendance/live-roster');
       setRoster(response.data.logs);
       setIsActiveSession(response.data.sessionActive);
     } catch (error) {
@@ -26,7 +26,7 @@ function TeacherDashboard() {
 
   const handleToggleSession = async () => {
     try {
-      const response = await axios.post('/api/attendance/toggle-session');
+      const response = await axios.post('https://smart-attendance-backend-api.vercel.app/api/attendance/toggle-session');
       setIsActiveSession(response.data.isSessionActive);
     } catch (error) {
       alert('Could not update session control status.');
