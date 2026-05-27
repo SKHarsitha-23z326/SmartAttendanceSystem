@@ -1,15 +1,23 @@
 const mongoose = require('mongoose');
 
 const attendanceSchema = new mongoose.Schema({
+  classroomId: {
+    type: String,
+    default: null
+  },
+  classroomName: {
+    type: String,
+    default: null
+  },
   studentId: {
     type: String,
-    required: [true, 'Student ID is required.'],
+    required: true,
     trim: true,
     uppercase: true
   },
   name: {
     type: String,
-    required: [true, 'Student name is required.'],
+    required: true,
     trim: true
   },
   status: {
@@ -17,14 +25,11 @@ const attendanceSchema = new mongoose.Schema({
     enum: ['Absent', 'Verified Lock', 'Exempted'],
     default: 'Verified Lock'
   },
-  // ✅ Useful to store the distance for audit/review purposes
   distanceAtCheckIn: {
     type: String,
     default: 'N/A'
   }
-}, {
-  timestamps: true  // Stores createdAt automatically — useful for time-of-check-in
-});
+}, { timestamps: true });
 
 const Attendance = mongoose.model('Attendance', attendanceSchema);
 module.exports = Attendance;

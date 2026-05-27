@@ -10,6 +10,7 @@ const connectDB = async () => {
   await mongoose.connect(process.env.MONGO_URI);
 };
 
+
 app.use(cors());
 app.use(express.json());
 
@@ -26,7 +27,8 @@ app.use(async (req, res, next) => {
 const studentDbRoutes = require('./routes/studentRoutes');
 const authRoutes = require('./routes/authRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes');
-
+const classroomRoutes = require('./routes/classroomRoutes');
+app.use('/api/classrooms', classroomRoutes);
 app.use('/api/db-students', studentDbRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/attendance', attendanceRoutes);
