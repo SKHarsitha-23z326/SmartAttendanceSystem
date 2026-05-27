@@ -231,6 +231,8 @@ function TeacherDashboard() {
 
 const th = { padding: '10px', textAlign: 'left', borderBottom: '1px solid #ddd', fontWeight: 'bold' };
 const td = { padding: '10px', borderBottom: '1px solid #eee' };
-const logoutStyle = { background: 'transparent', border: '1px solid #ccc', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer' };
+const logoutStyle = { background: 'transparent', border: '1px solid #ccc', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer',
+  color: 'white',     
+  fontSize: '14px' };
 
 export default TeacherDashboard;
