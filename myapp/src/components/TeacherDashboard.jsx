@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API = 'https://smart-attendance-system-b4s4.vercel.app/';
+const API = 'https://smart-attendance-system-b4s4.vercel.app';
 
 function TeacherDashboard() {
   const [roster, setRoster] = useState([]);

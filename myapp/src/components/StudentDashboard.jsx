@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API = 'https://smart-attendance-system-b4s4.vercel.app/'; // 🔁 Replace with your actual backend URL
+const API = 'https://smart-attendance-system-b4s4.vercel.app';
 
 function StudentDashboard() {
   const [coords, setCoords] = useState({ latitude: null, longitude: null });

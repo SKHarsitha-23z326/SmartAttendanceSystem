@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-const API = 'https://smart-attendance-system-b4s4.vercel.app/';
+const API = 'https://smart-attendance-system-b4s4.vercel.app';
 
 function Login() {
   const [credentials, setCredentials] = useState({ id: '', password: '', role: 'student' });
