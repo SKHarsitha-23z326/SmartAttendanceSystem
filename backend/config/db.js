@@ -3,14 +3,15 @@ const mongoose = require('mongoose');
 const globalSystemConfig = {
   isSessionActive: false,
   classroomCoords: {
-    lat: 13.0827,  // 🔁 Replace with your actual classroom lat
-    lng: 80.2707   // 🔁 Replace with your actual classroom lng
+    lat: 13.0827,
+    lng: 80.2707
   },
   allowedRadiusMeters: 50
 };
 
 const connectDB = async () => {
   try {
+    if (mongoose.connections[0].readyState) return;
     const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
