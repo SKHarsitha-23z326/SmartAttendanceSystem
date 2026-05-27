@@ -23,11 +23,9 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Route not found.' });
 });
 
-// ✅ For local development
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
-// ✅ For Vercel serverless — export the app
 module.exports = app;

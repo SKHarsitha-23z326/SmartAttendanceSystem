@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+
+const API = 'https://smart-attendance-system-b4s4.vercel.app/';
 
 function Login() {
   const [credentials, setCredentials] = useState({ id: '', password: '', role: 'student' });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials((prev) => ({ ...prev, [name]: value }));
+    setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
     if (!credentials.id || !credentials.password) {
-      alert('Please fill out all fields.');
+      setError('Please fill out all fields.');
       return;
     }
 
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post(`${API}/api/auth/login`, {
         rollNo: credentials.id,
         password: credentials.password
       });
@@ -27,7 +31,7 @@ function Login() {
       const { user } = response.data;
 
       if (user.role !== credentials.role) {
-        alert(`Access Denied: Specified ID is registered as a ${user.role}.`);
+        setError(`Access Denied: This ID is registered as a ${user.role}.`);
         return;
       }
 
@@ -40,14 +44,15 @@ function Login() {
       } else {
         navigate('/student');
       }
-    } catch (error) {
-      alert(error.response?.data?.message || 'Authentication failed. Connection refused.');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Authentication failed.');
     }
   };
 
   return (
     <div className="auth-card">
       <h2>Sign In to Portal</h2>
+      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Select User Role</label>
@@ -56,19 +61,19 @@ function Login() {
             <option value="teacher">Teacher / Professor</option>
           </select>
         </div>
-
         <div className="form-group">
-          <label>Identification Number</label>
+          <label>Roll Number</label>
           <input type="text" name="id" placeholder="e.g., 23Z326" value={credentials.id} onChange={handleChange} />
         </div>
-
         <div className="form-group">
           <label>Password</label>
           <input type="password" name="password" placeholder="••••••••" value={credentials.password} onChange={handleChange} />
         </div>
-
         <button type="submit" className="cta-button">Access Dashboard</button>
       </form>
+      <p style={{ textAlign: 'center', marginTop: '16px' }}>
+        No account? <Link to="/register">Register here</Link>
+      </p>
     </div>
   );
 }
