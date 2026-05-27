@@ -40,9 +40,9 @@ function Login() {
       localStorage.setItem('userName', user.name);
 
       if (user.role === 'teacher') {
-        navigate('/teacher');
-      } else {
         navigate('/student');
+      } else {
+        navigate('/teacher');
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Authentication failed.');
