@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-const API = 'https://smart-attendance-system-b4s4.vercel.app';
+import api from '../utils/api';
 
 function StudentDashboard() {
   const [classrooms, setClassrooms] = useState([]);
@@ -28,7 +26,7 @@ function StudentDashboard() {
 
   const fetchClassrooms = async () => {
     try {
-      const res = await axios.get(`${API}/api/classrooms/student/${userId}`);
+      const res = await api.get(`/api/classrooms/student/${userId}`);
       setClassrooms(res.data);
     } catch (err) {
       console.error('Error fetching classrooms:', err);
@@ -39,7 +37,7 @@ function StudentDashboard() {
     setJoinError('');
     if (!joinCode.trim()) return;
     try {
-      await axios.post(`${API}/api/classrooms/join`, {
+      await api.post(`/api/classrooms/join`, {
         code: joinCode.toUpperCase(),
         studentId: userId,
         studentName
@@ -60,7 +58,7 @@ function StudentDashboard() {
     }
 
     try {
-      const res = await axios.post(`${API}/api/classrooms/submit-attendance`, {
+      const res = await api.post(`/api/classrooms/submit-attendance`, {
         classroomId: classroom._id,
         studentId: userId,
         studentName,

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { verifyToken } = require('../middleware/authMiddleware');
 const {
   createClassroom,
   getTeacherClassrooms,
@@ -10,15 +11,13 @@ const {
   submitClassroomAttendance
 } = require('../controllers/classroomController');
 
-// Teacher routes
-router.post('/create', createClassroom);
-router.get('/teacher/:teacherId', getTeacherClassrooms);
-router.post('/toggle/:classroomId', toggleClassroomSession);
-router.get('/attendance/:classroomId', getClassroomAttendance);
-
-// Student routes
-router.post('/join', joinClassroom);
-router.get('/student/:studentId', getStudentClassrooms);
-router.post('/submit-attendance', submitClassroomAttendance);
+// ✅ All routes protected
+router.post('/create', verifyToken, createClassroom);
+router.get('/teacher/:teacherId', verifyToken, getTeacherClassrooms);
+router.post('/toggle/:classroomId', verifyToken, toggleClassroomSession);
+router.get('/attendance/:classroomId', verifyToken, getClassroomAttendance);
+router.post('/join', verifyToken, joinClassroom);
+router.get('/student/:studentId', verifyToken, getStudentClassrooms);
+router.post('/submit-attendance', verifyToken, submitClassroomAttendance);
 
 module.exports = router;

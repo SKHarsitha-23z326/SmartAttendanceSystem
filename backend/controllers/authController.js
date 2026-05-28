@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
   try {
@@ -17,8 +18,16 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ name, rollNo, password: hashedPassword, role });
 
+    // ✅ Generate JWT token
+    const token = jwt.sign(
+      { id: newUser.rollNo, role: newUser.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
     res.status(201).json({
       message: 'Registration successful.',
+      token,
       user: { id: newUser.rollNo, name: newUser.name, role: newUser.role }
     });
   } catch (error) {
@@ -44,8 +53,16 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Invalid password.' });
     }
 
+    // ✅ Generate JWT token
+    const token = jwt.sign(
+      { id: user.rollNo, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
     res.status(200).json({
       message: 'Authentication successful.',
+      token,
       user: { id: user.rollNo, name: user.name, role: user.role }
     });
   } catch (error) {

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-const API = 'https://smart-attendance-system-b4s4.vercel.app';
+import api from '../utils/api';
 
 function TeacherDashboard() {
   const [classrooms, setClassrooms] = useState([]);
@@ -17,7 +15,7 @@ function TeacherDashboard() {
 
   const fetchClassrooms = async () => {
     try {
-      const res = await axios.get(`${API}/api/classrooms/teacher/${teacherId}`);
+      const res = await api.get(`/api/classrooms/teacher/${teacherId}`);
       setClassrooms(res.data);
     } catch (err) {
       console.error('Error fetching classrooms:', err);
@@ -26,7 +24,7 @@ function TeacherDashboard() {
 
   const fetchAttendance = async (classroomId) => {
     try {
-      const res = await axios.get(`${API}/api/classrooms/attendance/${classroomId}`);
+      const res = await api.get(`/api/classrooms/attendance/${classroomId}`);
       setAttendanceLogs(res.data.logs);
     } catch (err) {
       console.error('Error fetching attendance:', err);
@@ -49,7 +47,7 @@ function TeacherDashboard() {
     e.preventDefault();
     setError('');
     try {
-      await axios.post(`${API}/api/classrooms/create`, {
+      await api.post(`/api/classrooms/create`, {
         ...form,
         lat: parseFloat(form.lat),
         lng: parseFloat(form.lng),
@@ -67,7 +65,7 @@ function TeacherDashboard() {
 
   const handleToggleSession = async (classroomId) => {
     try {
-      const res = await axios.post(`${API}/api/classrooms/toggle/${classroomId}`);
+      const res = await api.post(`/api/classrooms/toggle/${classroomId}`);
       fetchClassrooms();
       if (selectedClassroom?._id === classroomId) {
         setSelectedClassroom(prev => ({ ...prev, isSessionActive: res.data.isSessionActive }));

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import api from '../utils/api';
 
 const API = 'https://smart-attendance-system-b4s4.vercel.app';
 
@@ -23,18 +24,19 @@ function Login() {
     }
 
     try {
-      const response = await axios.post(`${API}/api/auth/login`, {
-        rollNo: credentials.id,
-        password: credentials.password
-      });
+      const response = await api.post('/api/auth/login', {
+  rollNo: credentials.id,
+  password: credentials.password
+});
 
-      const { user } = response.data;
+      const { user, token } = response.data;
 
       if (user.role !== credentials.role) {
         setError(`Access Denied: This ID is registered as a ${user.role}.`);
         return;
       }
 
+      localStorage.setItem('token', token);
       localStorage.setItem('userRole', user.role);
       localStorage.setItem('userId', user.id);
       localStorage.setItem('userName', user.name);
